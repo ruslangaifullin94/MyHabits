@@ -36,21 +36,28 @@ final class HabitViewCell: UICollectionViewCell {
         return label
     }()
     
-    private lazy var statusHabit: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
-        button.clipsToBounds = true
-        return button
+    private lazy var statusHabit: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.isUserInteractionEnabled = true
+        imageView.clipsToBounds = true
+        return imageView
     }()
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
         setupConstraits()
+        setupGestureRecognizer()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupGestureRecognizer() {
+        let tapGestureStatus = UITapGestureRecognizer(target: self, action: #selector(didTapButton))
+        tapGestureStatus.numberOfTapsRequired = 1
+        statusHabit.addGestureRecognizer(tapGestureStatus)
     }
     
     func setupCollectionCell(with habit: Habit) {
@@ -62,9 +69,9 @@ final class HabitViewCell: UICollectionViewCell {
         statusHabit.tintColor = habit.color
         countLabel.text = "Cчетчик: " + String(habit.trackDates.count)
         if habit.isAlreadyTakenToday == true {
-            statusHabit.setImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
+            statusHabit.image = UIImage(systemName: "checkmark.circle.fill")
         } else {
-            statusHabit.setImage(UIImage(systemName: "circle"), for: .normal)
+            statusHabit.image = UIImage(systemName: "circle")
         }
     }
     
@@ -74,7 +81,7 @@ final class HabitViewCell: UICollectionViewCell {
         if habit?.isAlreadyTakenToday == false {
             guard let habit = self.habit else {return}
             HabitsStore.shared.track(habit)
-            statusHabit.setImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
+            statusHabit.image = UIImage(systemName: "checkmark.circle.fill")
             delegate?.reloadDataCollection()
         }
        
@@ -97,8 +104,8 @@ final class HabitViewCell: UICollectionViewCell {
             
             statusHabit.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             statusHabit.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -25),
-            statusHabit.widthAnchor.constraint(equalToConstant: 50),
-            statusHabit.heightAnchor.constraint(equalToConstant: 50),
+            statusHabit.widthAnchor.constraint(equalToConstant: 38),
+            statusHabit.heightAnchor.constraint(equalToConstant: 38),
             
             countLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 92),
             countLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor)

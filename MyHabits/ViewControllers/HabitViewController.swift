@@ -255,8 +255,7 @@ class HabitViewController: UIViewController{
                 HabitsStore.shared.habits[index].color = habit.color
             }
             HabitsStore.shared.save()
-            self.dismiss(animated: true)
-            
+            self.navigationController?.popToRootViewController(animated: true)
         } else {
             let newHabit = Habit(name: enterHabitName.text!, date: setTimePicker.date, color: setHabitColor.tintColor)
             let makeHabit = HabitsStore.shared

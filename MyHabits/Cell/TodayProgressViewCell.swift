@@ -45,7 +45,7 @@ final class TodayProgressViewCell: UICollectionViewCell {
     }
     
     public func upgradeProgress() {
-        progressPercent.text = String((HabitsStore.shared.todayProgress) * 100)+"%"
+        progressPercent.text = String(format: "%.0f", HabitsStore.shared.todayProgress * 100)+"%"
         progressBar.setValue(HabitsStore.shared.todayProgress, animated: true)
     }
     
@@ -65,8 +65,6 @@ final class TodayProgressViewCell: UICollectionViewCell {
             
             progressPercent.topAnchor.constraint(equalTo: progressLabel.topAnchor),
             progressPercent.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -12)
-//            progressPercent.leftAnchor.constraint(equalTo: , constant: <#T##CGFloat#>)
-        
         ])
         
     }

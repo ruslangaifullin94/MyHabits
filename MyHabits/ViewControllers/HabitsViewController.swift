@@ -40,20 +40,15 @@ class HabitsViewController: UIViewController {
         setupView()
         setupConstraits()
         NotificationCenter.default.addObserver(self, selector: #selector(didTapStatusButtonNotification), name: Notification.Name("tapStatusButton"), object: nil)
-        // Do any additional setup after loading the view.
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupController()
-//        habitCollectionView.reloadData()
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-//        print("privet")
-        
         habitData = HabitsStore.shared.habits
         habitCollectionView.reloadData()
     }

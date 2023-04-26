@@ -52,20 +52,19 @@ final class HabitDetailViewCell: UITableViewCell {
             
             statusDate.centerYAnchor.constraint(equalTo: dateLabel.centerYAnchor),
             statusDate.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -14),
-            statusDate.heightAnchor.constraint(equalToConstant: 44),
+            statusDate.heightAnchor.constraint(equalToConstant: 22),
             statusDate.widthAnchor.constraint(equalToConstant: 22)
         
         ])
     }
     
-    func update (_ date: Date) {
-        dateFormatter.dateStyle = .medium
-        let dateValue = dateFormatter.string(from: date)
-//        let dateValue = HabitsStore.trackDateString()
-//        let data = habit.trackDates
-        dateLabel.text = dateValue
+    func update (_ date: Date, _ habit: Habit, _ index: Int) {
         
-//        if date == habit.trackDates[]
+        dateLabel.text = HabitsStore.shared.trackDateString(forIndex: index)
+        
+        if HabitsStore.shared.habit(habit, isTrackedIn: date) {
+            statusDate.alpha = 1
+        }
         
     }
 }

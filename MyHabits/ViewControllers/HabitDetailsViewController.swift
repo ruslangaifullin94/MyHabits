@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Foundation
 
 protocol HabitDetailViewControllerDelegate: AnyObject {
     func closeController()
@@ -77,6 +78,7 @@ class HabitDetailsViewController: UIViewController {
             habitDateTrack.rightAnchor.constraint(equalTo: safeArea.rightAnchor)
         ])
     }
+  
     
     @objc private func didTapRightBarButton() {
         let habitViewController = UINavigationController(rootViewController: HabitViewController(habit: habit))
@@ -97,17 +99,29 @@ extension HabitDetailsViewController: UITableViewDelegate, UITableViewDataSource
         return 44
     }
     
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        habit?.trackDates.count ?? 1
         HabitsStore.shared.dates.count
     }
     
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        "Активность"
+    }
+    
+    
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CellReuse.detail.rawValue) as? HabitDetailViewCell else {return UITableViewCell()}
 //        let model = habit?.trackDates[indexPath.row]
+//        var dateSorted = HabitsStore.shared.dates
+//        if let index = dateSorted.firstIndex(where: {$0 < habit!.date}) {
+//            dateSorted.remove(at: index)
+//        }
         let date = HabitsStore.shared.dates[indexPath.item]
 //        let model = HabitsStore.shared.habits[indexPath.item]
-        cell.update(date)
+        cell.update(date,habit!, indexPath.item)
         return cell
     }
     
